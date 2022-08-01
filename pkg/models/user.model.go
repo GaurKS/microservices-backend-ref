@@ -30,7 +30,7 @@ type User struct {
 	Gender         string              `json:"gender"` // Male, Female, Other
 	Role           string              `json:"role"`   // CA, PA, SA
 	ImageUrl       string              `json:"imageUrl"`
-	Email          string              `json:"email" gorm:"unique"`
+	Email          string              `json:"email" gorm:"unique;->"`
 	Password       string              `json:"-"`
 	Todos          []Todo              `json:"todos"`
 	Interest       datatypes.JSON      `json:"interest"`
