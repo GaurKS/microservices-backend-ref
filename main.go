@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -9,16 +10,11 @@ import (
 	"github.com/GaurKS/backend-palette/pkg/routes"
 	"github.com/GaurKS/backend-palette/pkg/services"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func main() {
 
 	// Setting variables for app env
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 
 	// Database connection and handler assignment
 	DB := db.Init()
@@ -33,5 +29,20 @@ func main() {
 		routes.UserRouter(r.Group("/user"), &h)
 		routes.TodoRouter(r.Group("/todo"), &h)
 	}
-	router.Run(os.Getenv("LOCAL_PORT"))
+	// get the port
+	port, err := getPort()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	router.Run(port)
+}
+
+func getPort() (string, error) {
+	// the PORT is supplied by Heroku
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "", fmt.Errorf("$PORT not set")
+	}
+	return ":" + port, nil
 }
