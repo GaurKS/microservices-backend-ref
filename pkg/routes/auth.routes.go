@@ -7,7 +7,7 @@ import (
 )
 
 func AuthRouter(r *gin.RouterGroup, h *services.Handler) {
-	r.POST("/validate", services.CheckEmail)
+// 	r.POST("/validate", services.CheckEmail)
 	r.POST("/register", services.CreateUser) //TODO: Handle create user service
 	r.POST("/login", services.GenerateToken)
 }
